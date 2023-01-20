@@ -5,114 +5,64 @@
 // 27(0,0,1) 90(0,1,1)
 // 26(1,0,1) 55(1,1,1)
 
-// void FillArray(int[] array)
-// {
-//     Console.Write("[ ");
 
-//     int i = 0;
-
-//     while (i < array.Length)
-//     {
-//         Random rnd = new Random();
-//         int q = rnd.Next(1, 11);
-//         if (СheckingForMatch(q, array) == true)
-//         {
-//             array[i] = q;
-//             Console.Write(array[i] + " ");
-//             i++;
-//         }
-
-//     }
-
-//     Console.Write("]");
-// }
-
-// bool СheckingForMatch(int n, int[] arr) // Метод проверяет число на совпадение. Правда/Лож
-// {
-//     bool run = true;
-//     for (int i = 0; i < arr.Length; i++)
-//     {
-//         if (n == arr[i])
-//         {
-//             run = false;
-//             break;
-//         }
-
-//     }
-//     return run;
-// }
-
-// Console.Clear();
-// Console.WriteLine("Введите количество строк");
-// int rows = Convert.ToInt32(Console.ReadLine());
-// Console.WriteLine("Введите количество столбцов");
-// int cols = Convert.ToInt32(Console.ReadLine());
-// int[,] array = new int[rows, cols];
-
-
-// FillArray(array);
-// PrintArray(array);
-
-
-
-
-// void FillArray(int[,] array)
-// {
-//     for (int i = 0; i < array.GetLength(0); i++)
-//         for (int j = 0; j < array.GetLength(1); j++)
-//         int q = rnd.Next(1, 11);
-//         if (СheckingForMatch(q, array) == true)
-//         {
-//             array[i] = q;
-//             Console.Write(array[i] + " ");
-//             i++;
-//         }
-// }
-// void PrintArray(int[,] array)
-// {
-//     for (int i = 0; i < array.GetLength(0); i++)
-//     {
-//         for (int j = 0; j < array.GetLength(1); j++)
-//             Console.Write($"{array[i, j],2} \t");
-//         Console.WriteLine();
-//     }
-// }
-
-
-
-int[,,] CreateMatrix (int [,,] array3D) 
+bool FindElem(int[,,] array3D, int N)
 {
-    Random rnd = new Random();   
-    for (int i = 0; i < array3D.GetLength(0); i++) 
+    for (int i = 0; i < array3D.GetLength(0); i++)
     {
         for (int j = 0; j < array3D.GetLength(1); j++)
         {
             for (int k = 0; k < array3D.GetLength(2); k++)
+                if (N == array3D[i, j, k]) return false;
+
+        }
+    }
+    return true;
+}
+
+int[,,] CreateMatrix(int[,,] array3D)
+{
+    Random rnd = new Random();
+    for (int i = 0; i < array3D.GetLength(0); i++)
+    {
+        for (int j = 0; j < array3D.GetLength(1); j++)
+        {
+            int k = 0;
+            while (k < array3D.GetLength(2))
+            {
+                int temp = rnd.Next(1, array3D.Length + 1000);
+
+                if (FindElem(array3D, temp))
                 {
-                    array3D[i,j,k] = rnd.Next(1, 100);
-                    
+
+                    array3D[i, j, k] = temp;
+
+                    k++;
                 }
+            }
         }
     }
     return array3D;
-} 
- 
+}
+
 void PrintMatrix(int[,,] matrix)
 {
-    for (int i = 0; i <  matrix.GetLength(0); i++)
+
+    for (int k = 0; k < matrix.GetLength(2); k++)
     {
-        
-        for (int j = 0; j < matrix.GetLength(1); j++) 
+        for (int i = 0; i < matrix.GetLength(0); i++)
         {
-            for (int k = 0; k < matrix.GetLength(2); k++)
+            for (int j = 0; j < matrix.GetLength(1); j++)
+
             {
-            Console.Write($"{matrix[i, j, k], 5}");            
+                Console.Write($"{matrix[i, j, k],5} ({i}, {j}, {k})");
             }
+            System.Console.WriteLine();
         }
-        Console.WriteLine();        
-    }        
+        Console.WriteLine();
+    }
 }
- 
+
 
 
 Console.Clear();
@@ -122,6 +72,6 @@ Console.WriteLine("Введите количество столбцов");
 int n = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("Введите количество уровней");
 int m = Convert.ToInt32(Console.ReadLine());
-int[,,] array3D = new int [a,n,m];
+int[,,] array3D = new int[a, n, m];
 CreateMatrix(array3D);
 PrintMatrix(array3D);
